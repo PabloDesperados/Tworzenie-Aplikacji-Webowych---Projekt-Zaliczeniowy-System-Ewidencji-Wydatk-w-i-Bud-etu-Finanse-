@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <div>
+                <h:outputText value="#{msgs.appTitle}" style="font-size: 20px; font-weight: bold;"/><br/>
+                <h:outputText value="#{msgs.authorLabel} #{applicationControllerXML.student}" style="font-size: 13px;"/>
+            </div>
+            <div>
+                <h:form id="headerForm" style="display: flex; align-items: center; gap: 10px;">
+                    <h:outputText value="#{msgs.themeLabel}"/>
+                    <p:selectOneMenu id="themeSelectMenu" value="#{sessionController.currentTheme}">
+                        <p:ajax process="@this" update="@all"
+                                oncomplete="PrimeFaces.changeTheme($('#headerForm\\:themeSelectMenu_label').text());"/>
+                        <f:selectItems value="#{sessionController.themes}"/>
+                    </p:selectOneMenu>
+                    <p:commandButton value="#{msgs.logout} (#{sessionController.loggedUserName})"
+                                     icon="pi pi-sign-out"
+                                     styleClass="ui-button-danger"
+                                     action="#{sessionController.logout()}"
+                                     ajax="false"/>
+                </h:form>
+            </div>
+        </div>
+    </h:body>
+</html>

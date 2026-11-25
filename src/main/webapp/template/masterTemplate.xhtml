@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>#{msgs.appTitle}</title>
+        <h:outputStylesheet name="mystyle.css" library="css"/>
+    </h:head>
+    <h:body>
+        <div class="layout-wrapper">
+            <div class="layout-top">
+                <ui:include src="/templateElements/appHeader.xhtml"/>
+            </div>
+            <div class="layout-main">
+                <div class="layout-left">
+                    <h4>Menu</h4>
+                    <h:form id="menuForm">
+                        <ul style="list-style-type: none; padding-left: 0; line-height: 2.2;">
+                            <ui:repeat value="#{sessionController.menuItemList}" var="menu">
+                                <li>
+                                    <h:commandLink value="#{menu.itemName}" action="#{menu.itemParam}"/>
+                                </li>
+                            </ui:repeat>
+                            <li style="margin-top: 15px;">
+                                <!-- Przyklad nawigacji dynamicznej wywolujacej metode z SessionController -->
+                                <p:commandButton value="Szybki skok do Bazy"
+                                                 icon="pi pi-database"
+                                                 action="#{sessionController.navigateDynamicToDb()}"
+                                                 ajax="false"/>
+                            </li>
+                        </ul>
+                    </h:form>
+                </div>
+                <div class="layout-content">
+                    <ui:insert name="content">Zawartosc strony</ui:insert>
+                </div>
+            </div>
+            <div class="layout-bottom">
+                <ui:include src="/templateElements/appFooter.xhtml"/>
+            </div>
+        </div>
+    </h:body>
+</html>
+

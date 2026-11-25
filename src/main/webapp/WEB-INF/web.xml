@@ -35,6 +35,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>ChronioneZasobyBudzetu</web-resource-name>
+            <url-pattern>/faces/index.xhtml</url-pattern>
             <url-pattern>/faces/views/*</url-pattern>
             <url-pattern>/views/*</url-pattern>
         </web-resource-collection>

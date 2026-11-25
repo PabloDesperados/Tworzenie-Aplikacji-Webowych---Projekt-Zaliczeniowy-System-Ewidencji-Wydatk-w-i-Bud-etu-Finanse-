@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ccomp="http://java.sun.com/jsf/composite/ccomp"
+                template="./../template/masterTemplate.xhtml">
+
+    <ui:define name="content">
+        <p:panel header="Punkt 7: Planowanie budzetu z uzyciem AJAX, sortowania i eksportu PDF">
+            <h:form id="ajaxBudgetForm">
+                <!-- Sortowanie kolekcji za pomoca Comparator + AJAX (Zadanie 6, pkt 6b) -->
+                <div style="margin-bottom: 10px; display: flex; gap: 10px; align-items: center;">
+                    <h:outputText value="Sortuj kategorie (Comparator + AJAX): "/>
+                    <p:commandButton value="Rosnaco (A-Z)" icon="pi pi-sort-alpha-down"
+                                     action="#{budgetChartBean.sortByName('asc')}"
+                                     process="@form" update="@form"/>
+                    <p:commandButton value="Malejaco (Z-A)" icon="pi pi-sort-alpha-up"
+                                     action="#{budgetChartBean.sortByName('desc')}"
+                                     process="@form" update="@form"/>
+                </div>
+
+                <!-- Tabela PrimeFaces z obsluga AJAX i eksportem PDF (Zadanie 8, pkt 5a-5c) -->
+                <p:dataTable id="dt-budget" var="item" value="#{budgetChartBean.categoriesList}"
+                             reflow="true" showGridlines="true"
+                             rowKey="#{item.id}" paginator="true" rows="10" paginatorPosition="bottom">
+
+                    <p:column headerText="ID" sortBy="#{item.id}" filterBy="#{item.id}">
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+
+                    <p:column headerText="Nazwa kategorii" sortBy="#{item.categoryName}" filterBy="#{item.categoryName}">
+                        <p:inputText value="#{item.categoryName}" style="width: 100%;"/>
+                    </p:column>
+
+                    <p:column headerText="Kwota (PLN)" sortBy="#{item.amount}" filterBy="#{item.amount}">
+                        <p:inputText value="#{item.amount}" style="width: 100%;"/>
+                    </p:column>
+
+                    <!-- Kolumna akcji AJAX nieeksportowana do PDF (Zadanie 8, pkt 5c) -->
+                    <p:column exportable="false" style="width: 180px; text-align: center;">
+                        <f:facet name="header">
+                            <p:commandButton value="Eksport PDF" icon="pi pi-file-pdf"
+                                             styleClass="ui-button-help" ajax="false">
+                                <p:dataExporter type="pdf" target="dt-budget" fileName="budzet_kategorie"/>
+                            </p:commandButton>
+                        </f:facet>
+
+                        <p:commandButton icon="pi pi-plus" title="Dodaj wiersz (AJAX)"
+                                         styleClass="rounded-button ui-button-success"
+                                         action="#{budgetChartBean.addCategory()}"
+                                         process="@form" update="@form"/>
+                        <h:outputText value=" "/>
+                        <p:commandButton icon="pi pi-save" title="Zapisz zmiany (AJAX)"
+                                         styleClass="rounded-button ui-button-info"
+                                         action="#{budgetChartBean.editCategory()}"
+                                         process="@form" update="@form"/>
+                        <h:outputText value=" "/>
+                        <p:commandButton icon="pi pi-trash" title="Usun wiersz (AJAX)"
+                                         styleClass="rounded-button ui-button-danger"
+                                         action="#{budgetChartBean.deleteCategory(item)}"
+                                         process="@form" update="@form"/>
+                    </p:column>
+                </p:dataTable>
+
+                <!-- Wykresy odswiezane automatycznie przez AJAX po zmianie tabeli -->
+                <ccomp:componentChart leftVisible="true" rightVisible="true"/>
+            </h:form>
+        </p:panel>
+    </ui:define>
+</ui:composition>
+

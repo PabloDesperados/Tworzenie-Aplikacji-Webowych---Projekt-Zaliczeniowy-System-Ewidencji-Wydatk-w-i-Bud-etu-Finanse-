@@ -21,7 +21,6 @@ import pl.budget.common.MenuItem;
 @SessionScoped
 public class SessionController implements Serializable {
 
-    // Punkt 5: Wstrzykniecie komponentu o zasiegu aplikacji do komponentu o zasiegu sesji
     @Inject
     private ApplicationController applicationControllerReference;
 
@@ -37,12 +36,10 @@ public class SessionController implements Serializable {
     
     @PostConstruct
     public void init() {
-        // Rejestracja nowej sesji w komponencie ApplicationScoped
         if (applicationControllerReference != null) {
             applicationControllerReference.incrementSessions();
         }
 
-        // Inicjalizacja motywow PrimeFaces (Zadanie 8, pkt 3g)
         themes = new ArrayList<>();
         themes.add("nova-light");
         themes.add("nova-dark");

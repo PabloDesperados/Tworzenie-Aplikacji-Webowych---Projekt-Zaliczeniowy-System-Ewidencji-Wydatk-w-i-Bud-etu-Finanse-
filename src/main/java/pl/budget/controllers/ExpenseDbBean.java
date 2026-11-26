@@ -104,7 +104,7 @@ public class ExpenseDbBean implements Serializable {
         }
     }
 
-    // Obsluga błędów
+    // Obsługa błędów
     public void sendJSFErrorMessage(Exception ex) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();

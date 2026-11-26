@@ -4,13 +4,11 @@
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
       xmlns:p="http://primefaces.org/ui">
 
-    <!-- Iterfejs -->
     <cc:interface>
         <cc:attribute name="leftVisible"/>
         <cc:attribute name="rightVisible"/>
     </cc:interface>
 
-    <!-- Implementacja -->
     <cc:implementation>
         <p:panelGrid id="tablecharts" columns="2" style="width: 100%; margin-top: 20px;">
             <p:lineChart model="#{budgetChartBean.lineModel}"

@@ -113,7 +113,9 @@ public class CacheFilter implements Filter {
         
         // Ustalenie nagłówków HTTP blokujących pamięć cache (Zadanie 3, pkt 8b)
         httpResponse.setHeader("Pragma", "no-cache");
-        httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        httpResponse.setHeader("Cache-Control", "no-cache");
+        httpResponse.setHeader("Cache-Control", "no-store");
+        httpResponse.setHeader("Cache-Control", "must-revalidate");
         httpResponse.setDateHeader("Expires", 0);
 
         // Blokowanie / usuwanie zbędnych plików cookies (z zachowaniem JSESSIONID dla sesji logowania)

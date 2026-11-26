@@ -50,7 +50,6 @@ public class BudgetChartBean implements Serializable {
         createBarModel();
     }
 
-    // Dodawanie nowego wiersza (Zadanie 8, pkt 6g + Zadanie 6, pkt 5a)
     public String addCategory() {
         long newId = categoriesList.isEmpty() ? 1 : categoriesList.get(categoriesList.size() - 1).getId() + 1;
         categoriesList.add(new BudgetCategory(newId, "Nowa kategoria", 0.0, true));
@@ -59,7 +58,6 @@ public class BudgetChartBean implements Serializable {
         return "";
     }
 
-    // Usuwanie wiersza (Zadanie 8, pkt 6g)
     public String deleteCategory(BudgetCategory category) {
         categoriesList.remove(category);
         createLineModel();
@@ -67,14 +65,12 @@ public class BudgetChartBean implements Serializable {
         return "";
     }
 
-    // Zapis zmian i odswiezenie wykresow (Zadanie 8, pkt 6g)
     public String editCategory() {
         createLineModel();
         createBarModel();
         return "";
     }
 
-    // Przelaczanie trybu edycji wiersza za pomoca checkboxa (Zadanie 6, pkt 5a)
     public void visibleChange(BudgetCategory item) {
         int idx = categoriesList.indexOf(item);
         if (idx >= 0) {
@@ -84,7 +80,6 @@ public class BudgetChartBean implements Serializable {
         createBarModel();
     }
 
-    // Sortowanie kolekcji za pomoca Comparatora (Zadanie 6, pkt 6a)
     public void sortByName(String dir) {
         Comparator<BudgetCategory> comparator = (BudgetCategory a, BudgetCategory b) -> {
             if ("asc".equals(dir)) {
@@ -98,7 +93,6 @@ public class BudgetChartBean implements Serializable {
         createBarModel();
     }
 
-    // Model wykresu liniowego (Zadanie 8, pkt 6e)
     public void createLineModel() {
         lineModel = new LineChartModel();
         ChartData data = new ChartData();
@@ -128,7 +122,6 @@ public class BudgetChartBean implements Serializable {
         lineModel.setData(data);
     }
 
-    // Model wykresu slupkowego (Zadanie 8, pkt 6f)
     public void createBarModel() {
         barModel = new BarChartModel();
         ChartData data = new ChartData();

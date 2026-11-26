@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../template/masterTemplate.xhtml">
+
+    <ui:define name="content">
+        <p:panel header="Rejestr wydatków">
+            <h:form id="dbExpensesForm">
+                <div style="margin-bottom: 10px; display: flex; gap: 10px;">
+                    <p:commandButton value="Dodaj nowy rekord do bazy" icon="pi pi-plus"
+                                     styleClass="ui-button-success"
+                                     action="#{expenseDbBean.addRow()}"
+                                     process="@form" update="@form"/>
+                    <p:commandButton value="Odswiez dane z bazy H2" icon="pi pi-refresh"
+                                     action="#{expenseDbBean.refreshData()}"
+                                     process="@form" update="@form"/>
+                </div>
+
+                <!-- Tabela -->
+                <h:dataTable value="#{expenseDbBean.expenseToList}" var="row"
+                             border="1" cellpadding="6" cellspacing="0"
+                             style="width: 100%; border-collapse: collapse;">
+                    <h:column>
+                        <f:facet name="header">ID</f:facet>
+                        <h:outputText value="#{row.id}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Numer dokumentu</f:facet>
+                        <h:inputText value="#{row.numer}" rendered="#{row.edited}"/>
+                        <h:outputText value="#{row.numer}" rendered="#{not row.edited}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Tytul</f:facet>
+                        <h:inputText value="#{row.tytul}" rendered="#{row.edited}"/>
+                        <h:outputText value="#{row.tytul}" rendered="#{not row.edited}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Opis</f:facet>
+                        <h:inputText value="#{row.opis}" rendered="#{row.edited}"/>
+                        <h:outputText value="#{row.opis}" rendered="#{not row.edited}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Kwota (PLN)</f:facet>
+                        <h:inputText value="#{row.kwota}" rendered="#{row.edited}"/>
+                        <h:outputText value="#{row.kwota}" rendered="#{not row.edited}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Operacja (Edycja w bazie / Usun)</f:facet>
+                        <h:selectBooleanCheckbox value="#{row.edited}">
+                            <f:ajax listener="#{expenseDbBean.visibleChange(row)}" execute="@form" render="@form"/>
+                        </h:selectBooleanCheckbox>
+                        <h:outputText value=" Edytuj / Zapisz w DB "/>
+                        <h:commandButton value="Usun z DB">
+                            <f:ajax listener="#{expenseDbBean.deleteRow(row)}" execute="@form" render="@form"/>
+                        </h:commandButton>
+                    </h:column>
+                </h:dataTable>
+
+                <!-- Sekcja komunikatów -->
+                <h:messages style="color: red; margin-top: 10px;"/>
+            </h:form>
+        </p:panel>
+    </ui:define>
+</ui:composition>
+

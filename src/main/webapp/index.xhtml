@@ -9,23 +9,23 @@
                 template="./template/masterTemplate.xhtml">
 
     <ui:define name="content">
-        <!-- Punkt 4: Prezentacja danych ze wszystkich 3 komponentow zarzadzanych -->
         <p:panel header="#{msgs.welcome}" style="margin-bottom: 15px;">
-            <h:panelGrid columns="1" cellpadding="4">
-                <h:outputText value="Komponent Aplikacji (@ApplicationScoped): #{applicationController.appVersion} (#{applicationController.currency})"/>
-                <h:outputText value="Komponent Sesji (@SessionScoped + @Inject): #{sessionController.dataFromReferenceComponent}"/>
-                <h:outputText value="Komponent Widoku (@ViewScoped): #{dashboardViewBean.combinedSummary}"/>
-            </h:panelGrid>
-            <h:form style="margin-top: 8px;">
-                <p:commandButton value="Zwieksz licznik widoku (@ViewScoped)"
+            <h:form id="viewCounterForm">
+                <h:panelGrid columns="1" cellpadding="4">
+                    <h:outputText value="Wersja aplikacji: #{applicationController.appVersion} (#{applicationController.currency})"/>
+                    <h:outputText value="Informacje o sesji: #{sessionController.dataFromReferenceComponent}"/>
+                    <h:outputText value="Podsumowanie widoku: #{dashboardViewBean.combinedSummary}"/>
+                </h:panelGrid>
+                <p:commandButton value="Odswiez status widoku"
                                  action="#{dashboardViewBean.incrementCounter()}"
                                  update="@form"
-                                 icon="pi pi-refresh"/>
+                                 icon="pi pi-refresh"
+                                 style="margin-top: 8px;"/>
             </h:form>
         </p:panel>
 
-        <!-- Punkt 6: Tabela danych w kolekcji z modyfikacja, dodawaniem i usuwaniem (standardowy submit bez AJAX) -->
-        <p:panel header="Punkt 6: Kategorie budzetowe (tabela h:dataTable - operacje na kolekcji bez AJAX)">
+        <!-- Tabela -->
+        <p:panel header="Kategorie budżetowe">
             <h:form id="classicTableForm">
                 <h:dataTable value="#{budgetChartBean.categoriesList}" var="cat"
                              border="1" cellpadding="6" cellspacing="0"
@@ -58,7 +58,6 @@
             </h:form>
         </p:panel>
 
-        <!-- Komponent zlozony wykresow (Zadanie 8, pkt 6i) -->
         <ccomp:componentChart leftVisible="#{dashboardViewBean.showLineChart}"
                               rightVisible="#{dashboardViewBean.showBarChart}"/>
     </ui:define>

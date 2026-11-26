@@ -18,18 +18,18 @@
                 <div class="layout-left">
                     <h4>Menu</h4>
                     <h:form id="menuForm">
+                        <p:growl id="menuGrowl" showDetail="true" life="4000"/>
                         <ul style="list-style-type: none; padding-left: 0; line-height: 2.2;">
                             <ui:repeat value="#{sessionController.menuItemList}" var="menu">
                                 <li>
-                                    <h:commandLink value="#{menu.itemName}" action="#{menu.itemParam}"/>
+                                    <h:link value="#{menu.itemName}" outcome="#{menu.itemParam}"/>
                                 </li>
                             </ui:repeat>
                             <li style="margin-top: 15px;">
-                                <!-- Przyklad nawigacji dynamicznej wywolujacej metode z SessionController -->
-                                <p:commandButton value="Szybki skok do Bazy"
-                                                 icon="pi pi-database"
+                                <p:commandButton value="Panel administratora"
+                                                 icon="pi pi-shield"
                                                  action="#{sessionController.navigateDynamicToDb()}"
-                                                 ajax="false"/>
+                                                 update="menuGrowl"/>
                             </li>
                         </ul>
                     </h:form>

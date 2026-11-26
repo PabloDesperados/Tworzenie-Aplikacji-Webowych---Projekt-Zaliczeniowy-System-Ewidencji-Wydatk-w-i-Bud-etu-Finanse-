@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/ProjektTAIPlaskaczPawelIO2">
-    <Realm localDataSource="false"
+<Context antiJARLocking="true" path="/ProjektTAIPlaskaczPawelIO2">
+    <Resource name="jdbc/authority" auth="Container"
+              type="javax.sql.DataSource"
+              driverClassName="org.h2.Driver"
+              url="jdbc:h2:file:C:/tomee_bazy/tomeeAuthDB"
+              username="sa" password=""
+              maxActive="20" maxIdle="10" maxWait="-1"/>
+    
+    <Realm localDataSource="true"
            className="org.apache.catalina.realm.DataSourceRealm"
            dataSourceName="jdbc/authority"
-           userTable="users"
-           userNameCol="user_name"
-           userCredCol="user_pass"
-           userRoleTable="user_roles"
-           roleNameCol="role_name"/>
+           userTable="USERS"
+           userNameCol="USER_NAME"
+           userCredCol="USER_PASS"
+           userRoleTable="USER_ROLES"
+           roleNameCol="ROLE_NAME"/>
 </Context>

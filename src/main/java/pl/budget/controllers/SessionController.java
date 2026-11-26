@@ -54,30 +54,40 @@ public class SessionController implements Serializable {
         themes.add("vela");
         themes.add("arya");
 
-        // Inicjalizacja pozycji menu z uzyciem regul nawigacji z faces-config.xml (Zadanie 7, pkt 3b)
         menuItemList.add(new MenuItem("Pulpit i Wykresy", "goDashboard"));
-        menuItemList.add(new MenuItem("Budzet Sesyjny (AJAX)", "goSessionBudget"));
-        menuItemList.add(new MenuItem("Rejestr Wydatkow (Baza H2)", "goDbExpenses"));
+        menuItemList.add(new MenuItem("Planowanie Budżetu", "goSessionBudget"));
+        
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        if (ec != null && ec.isUserInRole("admin")) {
+            menuItemList.add(new MenuItem("Rejestr Wydatkow", "goDbExpenses"));
+        }
     }
 
-    // Metoda wspolpracy miedzy komponentami (Zadanie 2, pkt 6d)
     public String getDataFromReferenceComponent() {
         return applicationControllerReference.getAppVersion() + " | Waluta: " + applicationControllerReference.getCurrency();
     }
 
-    // Przyklad nawigacji dynamicznej z kontrolera (Zadanie 2, pkt 9d)
     public String navigateDynamicToDb() {
-        return "goDbExpenses";
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            if (ec.isUserInRole("admin")) {
+            return "goDbExpenses";
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null,
+                new javax.faces.application.FacesMessage(
+                    javax.faces.application.FacesMessage.SEVERITY_WARN,
+                    "Brak uprawnien",
+                    "Szybki dostep do rejestru bazy danych jest dostepny tylko dla roli admin."
+                ));
+            return null;
+        }
     }
 
-    // Jawne zakonczenie sesji i wylogowanie (Zadanie 3, pkt 7a)
     public String logout() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.invalidateSession();
         return "/logoutWindow.xhtml?faces-redirect=true";
     }
 
-    // Odczyt nazwy zalogowanego uzytkownika z TomEE
     public String getLoggedUserName() {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         return (ec.getRemoteUser() != null) ? ec.getRemoteUser() : "Gosc";

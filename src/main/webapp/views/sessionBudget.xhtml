@@ -11,7 +11,6 @@
     <ui:define name="content">
         <p:panel header="Punkt 7: Planowanie budzetu z uzyciem AJAX, sortowania i eksportu PDF">
             <h:form id="ajaxBudgetForm">
-                <!-- Sortowanie kolekcji za pomoca Comparator + AJAX (Zadanie 6, pkt 6b) -->
                 <div style="margin-bottom: 10px; display: flex; gap: 10px; align-items: center;">
                     <h:outputText value="Sortuj kategorie (Comparator + AJAX): "/>
                     <p:commandButton value="Rosnaco (A-Z)" icon="pi pi-sort-alpha-down"
@@ -65,7 +64,7 @@
                     </p:column>
                 </p:dataTable>
 
-                <!-- Wykresy odswiezane automatycznie przez AJAX po zmianie tabeli -->
+                <!-- Wykresy -->
                 <ccomp:componentChart leftVisible="true" rightVisible="true"/>
             </h:form>
         </p:panel>

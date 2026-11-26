@@ -12,7 +12,7 @@
         <p:panel header="Planowanie budzetu">
             <h:form id="ajaxBudgetForm">
                 <div style="margin-bottom: 10px; display: flex; gap: 10px; align-items: center;">
-                    <h:outputText value="Sortuj kategorie (Comparator + AJAX): "/>
+                    <h:outputText value="Sortuj kategorie: "/>
                     <p:commandButton value="Rosnaco (A-Z)" icon="pi pi-sort-alpha-down"
                                      action="#{budgetChartBean.sortByName('asc')}"
                                      process="@form" update="@form"/>
@@ -21,7 +21,6 @@
                                      process="@form" update="@form"/>
                 </div>
 
-                <!-- Tabela PrimeFaces z obsluga AJAX i eksportem PDF (Zadanie 8, pkt 5a-5c) -->
                 <p:dataTable id="dt-budget" var="item" value="#{budgetChartBean.categoriesList}"
                              reflow="true" showGridlines="true"
                              rowKey="#{item.id}" paginator="true" rows="10" paginatorPosition="bottom">
@@ -38,7 +37,6 @@
                         <p:inputText value="#{item.amount}" style="width: 100%;"/>
                     </p:column>
 
-                    <!-- Kolumna akcji AJAX nieeksportowana do PDF (Zadanie 8, pkt 5c) -->
                     <p:column exportable="false" style="width: 180px; text-align: center;">
                         <f:facet name="header">
                             <p:commandButton value="Eksport PDF" icon="pi pi-file-pdf"

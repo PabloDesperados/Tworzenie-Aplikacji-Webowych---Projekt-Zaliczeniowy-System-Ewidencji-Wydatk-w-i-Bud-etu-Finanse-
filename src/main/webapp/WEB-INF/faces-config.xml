@@ -30,9 +30,9 @@
             <var>msgs</var>
         </resource-bundle>
         <locale-config>
-            <default-locale>pl</default-locale>
-            <supported-locale>pl</supported-locale>
+            <default-locale>en</default-locale>
             <supported-locale>en</supported-locale>
+            <supported-locale>pl</supported-locale>
         </locale-config>
     </application>
     
@@ -47,7 +47,7 @@
         </managed-property>
         <managed-property>
             <property-name>projectTitle</property-name>
-            <value>System Ewidencji Budzetu</value>
+            <value>System Ewidencji Budżetu</value>
         </managed-property>
     </managed-bean>
     
